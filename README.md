@@ -8,14 +8,14 @@ The project under active development and new frameworks, tasks, metrics and repo
     - [Imbaml](https://github.com/AxiomAlive/Imbaml).
 - Supported tasks: tabular classification. 
 - Supported metrics:
-    - f1
-    - precision
-    - recall
-    - roc_auc
-    - average_precision
-    - balanced_accuracy
-    - mcc
-    - accuracy. 
+    - F1.
+    - Precision.
+    - Recall.
+    - ROC AUC.
+    - Average precision.
+    - Balanced accuracy.
+    - MCC.
+    - Accuracy. 
 - Supported data repositories:
     - [OpenML](https://www.openml.org/).
     - Local filesystem.
@@ -23,7 +23,7 @@ The project under active development and new frameworks, tasks, metrics and repo
 ### Usage
 1. Clone the project.
 2. Initialize project with `uv init` and create a virtual environment with `uv venv -p 3.10`.
-3. Install dependencies with `uv pip install -r requirements.txt`.
+3. Install dependencies with `uv sync`.
 4. Use examples from **examples** folder as an entry point. For instance, `uv run -m examples.bench`.
 
 ### Contribution
