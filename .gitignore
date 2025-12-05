@@ -15,7 +15,7 @@ openml_cache/
 stash/
 tests/
 hyperopt/
-imbaml/
+Imbaml/
 
 cloud.yaml
 requirements.txt

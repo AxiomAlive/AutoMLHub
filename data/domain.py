@@ -7,16 +7,16 @@ import pandas as pd
 
 
 @dataclass
-class TabularDataset:
+class Dataset:
     id: int
     name: str
     X: Union[pd.DataFrame, np.ndarray]
-    y: Union[pd.Series, np.ndarray]
+    y: Optional[Union[pd.Series, np.ndarray]] = None
     y_label: Optional[str] = None
     size: Optional[int] = None
 
-@dataclass
-class MLTask:
+@dataclass(frozen=True)
+class Task:
     id: int
-    dataset: TabularDataset
+    dataset: Dataset
     metric: str

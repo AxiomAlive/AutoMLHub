@@ -3,13 +3,12 @@ name = "ml-bench"
 version = "0.1.0"
 requires-python = ">=3.10"
 dependencies = [
-    "autogluon-tabular==1.3.1",
+    "autogluon-tabular[all]==1.3.1",
     "datasphere>=0.10.0",
     "docutils==0.21.2",
     "fastai>=2.8.4",
     "flaml==2.3.5",
     "imbalanced-learn==0.12.3",
-    "imbaml",
     "matplotlib==3.7.5",
     "numpy==1.26.0",
     "openml==0.14.2",
@@ -17,12 +16,15 @@ dependencies = [
     "pytest==8.3.5",
     "seaborn==0.13.2",
     "setuptools>=80.9.0",
-    "torch==2.7.0",
+    "torch>=2.2,<2.7",
     "tqdm==4.66.5",
-    "loguru"
+    "loguru",
 ]
 
-[tool.uv.sources]
-imbaml = { git = "https://github.com/AxiomAlive/imbaml.git" }
+[project.optional-dependencies]
+dev = []
+
+[global]
+extra-index-url = "https://download.pytorch.org/whl/cpu"
 # for local development.
 # imbaml = { path = "../imbaml", editable = true }

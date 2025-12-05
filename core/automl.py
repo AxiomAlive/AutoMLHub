@@ -5,18 +5,17 @@ import re
 from abc import ABC, abstractmethod
 from io import StringIO
 from typing import Optional, Set, Union, final, List, Dict
-import autogluon.tabular
 import numpy as np
 import pandas as pd
-import ray
 from sklearn.exceptions import NotFittedError
 from sklearn.metrics import fbeta_score, balanced_accuracy_score, matthews_corrcoef, recall_score, precision_score, average_precision_score, roc_auc_score, accuracy_score
-from imbaml.main import ImbamlOptimizer
 from autogluon.tabular import TabularDataset as AutoGluonTabularDataset, TabularPredictor as AutoGluonTabularPredictor
 from autogluon.core.metrics import make_scorer
 from loguru import logger
+import ray
 
-from core.domain import TabularDataset, MLTask
+# from Imbaml.core.main import Optimizer
+from data.domain import Dataset, Task
 
 
 class AutoML(ABC):
@@ -28,7 +27,7 @@ class AutoML(ABC):
     @abstractmethod
     def fit(
         self,
-        task: MLTask,
+        task: Task,
     ) -> None:
         raise NotImplementedError()
 
@@ -146,7 +145,7 @@ class Imbaml(AutoML):
 
     def fit(
         self,
-        task: MLTask,
+        task: Task,
     ) -> None:
         dataset = task.dataset
         metric = task.metric
@@ -158,7 +157,7 @@ class Imbaml(AutoML):
             elif dataset.size > 5:
                 n_evals //= 3
 
-        optimizer = ImbamlOptimizer(
+        optimizer = Optimizer(
             metric=metric,
             re_init=False,
             n_evals=n_evals,
@@ -249,7 +248,7 @@ class AutoGluon(AutoML):
     @logger.catch
     def fit(
         self,
-        task: MLTask,
+        task: Task,
     ) -> None:
         dataset = task.dataset
         metric = task.metric
@@ -268,19 +267,15 @@ class AutoGluon(AutoML):
             raise ValueError(f"Metric {metric} is not supported by AutoGluon.")
         
         if isinstance(dataset.X, np.ndarray):
-            Xy = pd.DataFrame(data=np.column_stack([dataset.X, dataset.y]))
-            y_label = Xy.columns[-1]
+            dataframe = pd.DataFrame(data=np.column_stack([dataset.X, dataset.y]))
         elif isinstance(dataset.X, pd.DataFrame):
-            if y_label is None:         
-                y_label = "Target"
-
-            Xy = pd.DataFrame(
+            dataframe = pd.DataFrame(
                 data=np.column_stack([dataset.X, dataset.y]),
                 columns=[*dataset.X.columns, y_label])
         else:
             raise TypeError()
 
-        ag_dataset = AutoGluonTabularDataset(Xy)
+        ag_dataset = AutoGluonTabularDataset(dataframe)
 
         predictor = AutoGluonTabularPredictor(
             problem_type='binary',

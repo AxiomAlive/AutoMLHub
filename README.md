@@ -1,5 +1,5 @@
-# MLBench
-The aim of this project is to simplify benchmarking process in the field of machine learning.
+# AutoMLBench
+The aim of this project is to simplify benchmarking process in the field of automated machine learning.
 
 ### Project status
 The project under active development and new frameworks, tasks, metrics and repositories to be added soon.
@@ -24,7 +24,7 @@ The project under active development and new frameworks, tasks, metrics and repo
 1. Clone the project.
 2. Initialize project with `uv init` and create a virtual environment with `uv venv -p 3.10`.
 3. Install dependencies with `uv sync`.
-4. Use examples from **examples** folder as a starting point. For instance, `uv run -m examples.bench`.
+4. Use examples from **examples** folder as a starting point. For instance, `uv run -m examples.1`.
 
 ### Contribution
 Contribution is welcome! Feel free to open issues and submit pull requests.
